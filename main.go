@@ -3,14 +3,19 @@ package main
 import (
 	"fmt"
 	"modulo/auxiliar"
+
+	"github.com/badoux/checkmail"
 )
 
 /*
 go guild > biuld precisa ser atualizado sempre que for necessário
 go install faz o mesmo que go build, porém adiciona na pasta raiz do projeto para execução
+go get <url> para importar pacote externo, executar no nivel de pasta dos modulos
 */
 
 func main() {
 	fmt.Println("Writing main archive")
 	auxiliar.Escrever()
+	erro := checkmail.ValidateFormat("testegmail.com")
+	fmt.Println(erro)
 }
