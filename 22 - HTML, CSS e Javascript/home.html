@@ -14,5 +14,12 @@
         -->
         <h4>Seja bem vindo, {{ .Nome }}</h4>
     </marquee>
+    <button id="botaoCA">Clique aqui!</button>
+    <script>
+        var botao = document.getElementById("botaoCA");
+        botao.onclick = function(){
+            alert("Botão clicado com sucesso!")
+        }
+    </script>
 </body>
 </html>
