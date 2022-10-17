@@ -17,7 +17,14 @@ type usuario struct {
 	Email string `json:"email"`
 }
 
-//CriarUsuario insere um usuário no banco de dados
+/*CriarUsuario insere um usuário no banco de dados
+Convenção utilizar ao inves de erro o "err"
+
+Validar retorno negativo de todas verificações
+Fazer função para response writer
+
+Pacote de log para acompanhar erros de execução
+*/
 func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 	corpoRequisicao, erro := ioutil.ReadAll(r.Body)
 	if erro != nil {
@@ -28,7 +35,8 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 	var usuario usuario
 
 	if erro = json.Unmarshal(corpoRequisicao, &usuario); erro != nil {
-		w.Write([]byte("Erro ao converter o usuario para struct"))
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(erro.Error()))
 		return
 	}
 
@@ -181,6 +189,7 @@ func AtualizarUsuario(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Erro ao atualizar o usuário!"))
 		return
 	}
+	/*Para atualização de um específico mais vale 200*/
 	w.WriteHeader(http.StatusNoContent)
 
 }
@@ -193,6 +202,10 @@ func DeletarUsuario(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Erro ao converter o parâmetro para inteiro"))
 		return
 	}
+
+	result := teste("teste")
+	fmt.Println(result)
+
 	db, erro := banco.Conectar()
 	if erro != nil {
 		w.Write([]byte("Erro ao conectar com banco de dados"))
@@ -212,4 +225,11 @@ func DeletarUsuario(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.WriteHeader(http.StatusNoContent)
+}
+
+func teste(parm string) string {
+	if parm == "rodrigo" {
+		return "sim"
+	}
+	return ""
 }

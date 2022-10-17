@@ -6,7 +6,9 @@ import (
 	_ "github.com/go-sql-driver/mysql" //Driver de conexão com MySQL
 )
 
-/*Como não estamos dentro do arquivo main não se pode fechar com fatal temos de retornar algo, neste caso retornaremos ou o ponteiro de conexão ou o erro, isso porque são mutuamente exclusivos*/
+/*Como não estamos dentro do arquivo main não se pode fechar com fatal temos de retornar algo, neste caso retornaremos ou o ponteiro de conexão ou o erro, isso porque são mutuamente exclusivos
+Exemplo de interface para conectar uma vez, na inicialização faz-se o contrato para conexão. Com a instância já se consegue utilizar todos handle
+*/
 func Conectar() (*sql.DB, error) {
 	stringConexao := "golang:golang@/devbook?charset=utf8&parseTimeTrue&loc=Local"
 
